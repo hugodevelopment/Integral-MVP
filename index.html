@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Integral</title>
+
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.5.0/math.js"></script>
+	<script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script> -->
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" type="text/css">
+  <script src="nerdamer.core.js"></script>
+    <script src="all.min.js"></script>
+
+</head>
+<body>
+    <main>
+        <header>
+			<nav>
+				<img src="Logo.png" id="logo">
+				<!-- Header para o site integral -->
+				<ul class="nav-links">
+					<li> <a href="https://www.youtube.com/@tridev6283" target="_blank"> <i class = "fa fa-youtube"></i> </a></li>
+					<li> <a href="https://www.instagram.com/tridev.tech/" target="_blank"><i class = "fa fa-instagram"></i> </a></li>
+					<li><a href="https://github.com/Hugox96/Site_Derivada" target="_blank"> <i class  = "fa fa-github"></i> </a> </li>
+				</ul>
+			</nav>
+		</header>
+
+    <!-- Texto explicativo sobre integral -->
+    <article class="texto-integral"> <br>
+			<h1> O que é uma integral ? </h1> <br>
+			<p> Uma integral é um conceito fundamental da matemática que tem uma ampla gama de aplicações em várias áreas, 
+                como física, engenharia e economia. 
+                Em sua essência, uma integral é uma ferramenta poderosa usada para calcular a 
+                acumulação de quantidades variáveis ao longo de um intervalo. 
+                Ela é o oposto da derivada, que é usada para calcular taxas de variação instantâneas. Vejamos um gif explicativo: </p> <br>
+              
+	</article>
+
+  
+  <div id="gif"> 
+    <img src="integral.gif" alt="integra-gif">
+  </div> <br>
+
+  <h1> Calculadora Integral Indefinida </h1> <br>
+    
+   <!--Classe e div para o cálculo da integral indefinida  -->
+    <div class="integral">
+        <label for="expression">Função:</label>
+        <input type="text" id="expression" placeholder="Exemplo: ∫x">
+        <button id="calculateButton">Calcular</button>
+    </div> 
+
+    <br>
+    
+    <div id="resultado"> Resulta: 
+      $$\int \frac{x^3}{3} dx = \frac{ax^{x+1}}{n+1} + C$$
+    </div>
+
+
+    <!-- código em js do  para o calculo da integral em -->
+<script>
+//------------------- Modifiquei o script para criar um passo para a resolução------------------------------------------//
+  document.addEventListener('DOMContentLoaded', function() {
+  // Acessamos o id calculateButton e com isso todo processo de cálculo é feito 
+  document.getElementById('calculateButton').addEventListener('click', function() {
+    var expressionInput = document.getElementById('expression');
+    var resultDiv = document.getElementById('resultado');
+    var expression = expressionInput.value;
+    console.log("oi", expression);
+    
+    // explicação para aparecer nas regras
+    const regraPolinomial = '\\int x^n\\, dx = \\frac{ax^{n+1}}{n+1} + C';
+
+
+    // Função para identificar o tipo de função com base no texto da função
+    function identificarTipoFuncao(funcao) {
+      if (funcao.includes('sin') || funcao.includes('cos') || funcao.includes('tan')) {
+        return 'trigonometrica';
+      } else if (funcao.includes('x') || funcao.includes('^')) {
+        return 'polinomial';
+      } else {
+        return 'outro';
+      }
+    }
+
+  // Função para calcular a integral com base no tipo de função
+function calcularIntegral() {
+  // Identificar o tipo de função
+  var tipoFuncao = identificarTipoFuncao(expression);
+  // Regra geral para integrais de funções polinomiais
+  
+   // Calcula a integral
+  let integral;
+  try {
+    integral = nerdamer.integrate(expression, 'x');
+  } catch (error) {
+    integral = null; // Define como nulo se não for possível calcular
+  }
+   
+
+  // Objeto com etapas para cada tipo de função
+  const tiposDeFuncao = {
+    trigonometrica: [
+      { descricao: 'Passo 1: É uma função trigonométrica', equacao: `f(x) = ${expression}`},
+      { descricao: 'Passo 2: Calculando a integral:', equacao:  `∫f(x) dx = ${integral.toString()}`},
+    ],
+    polinomial: [
+      { descricao: 'Passo 1: É uma função polinomial', equacao: `f(x) = ${expression}` },
+      { descricao: 'Passo 2: É uma função polinomial', equacao: `${regraPolinomial}`},
+      { descricao: 'Passo 3: Aplicar a regra dos polinômios:' , equacao: `∫f(x) = ${integral.toString()}`},
+    ],
+    outro: [
+      { descricao: 'Passo 1: Esta é uma função desconhecida', equacao: `f(x) = ${expression}` },
+      { descricao: 'Passo 2: Tente outro método de cálculo', equacao:  `∫f(x) dx = ${integral.toString()}`},
+    ],
+  };
+
+  // Obter as etapas apropriadas com base no tipo de função
+  var etapas = tiposDeFuncao[tipoFuncao];
+
+  var resultadoHTML = '';
+  etapas.forEach((etapa, index) => {
+    resultadoHTML += `<p>${etapa.descricao}</p>`;
+    resultadoHTML += `$$${etapa.equacao}$$`;
+    }
+  );
+  resultDiv.innerHTML = resultadoHTML;
+  
+  // Renderiza a fórmula usando MathJax
+  MathJax.typesetPromise([resultDiv])
+        .catch((err) => console.log('Erro ao renderizar a fórmula:', err));
+}
+
+calcularIntegral();
+
+  });
+});
+
+     </script>
+    </main>
+</body>
+</html>

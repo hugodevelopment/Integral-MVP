@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Integral</title>
+
+    
+
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'>
+  <!-- <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" type="text/css"> -->
+  <script src="nerdamer.core.js"></script>
+  <script src="all.min.js"></script>
+<head>
+    <body>
+        <input type="text" id="userInput" placeholder="Digite a função">
+         <button onclick="formatarIntegral()">Formatar</button>
+         <div id="resultadoDiv"> Testando div </div>
+    
+         <script>
+         function formatarIntegral() {
+            // Recupere a entrada do usuário
+            var userInput = document.getElementById('userInput').value;
+            var resultadoDiv = document.getElementById('resultadoDiv');
+        
+            // Calcule a integral usando uma biblioteca matemática como Math.js
+            integral = nerdamer.integrate(userInput, 'x');
+        
+            // Formate a integral como uma expressão LaTeX
+            var latexIntegral = `$$\\int ${userInput} \\, dx = ${integral} + C$$`;
+        
+            // Insira a expressão LaTeX na div de resultado
+            resultadoDiv.innerHTML = latexIntegral;
+            MathJax.typesetPromise([resultadoDiv])
+                .catch(function (err) {
+                    console.log('Erro ao renderizar a fórmula:', err);
+    });}
+    </script>
+        
+    </body>    
