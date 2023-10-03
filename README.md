@@ -1,427 +1,237 @@
-[![Build Status](https://travis-ci.org/jiggzson/nerdamer.svg?branch=master)](https://travis-ci.org/jiggzson/nerdamer)
+# MathJax
+## Beautiful math in all browsers
 
-Nerdamer
-========
+![GitHub release version](https://img.shields.io/github/v/release/mathjax/MathJax-src.svg?sort=semver)
+![GitHub release version (v2)](https://img.shields.io/github/package-json/v/mathjax/MathJax/legacy-v2.svg?label=release-v2)
+![NPM version](https://img.shields.io/npm/v/mathjax.svg?style=flat)
+<a href="http://www.numfocus.org">![powered by NumFOCUS](https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat)</a>  
+![jsdelivr rank](https://flat.badgen.net/jsdelivr/rank/npm/mathjax?color=green)
+![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hm/mathjax)
+![npm monthly downloads (full)](https://img.shields.io/npm/dm/mathjax?label=npm)
+![npm total downloads](https://img.shields.io/npm/dt/mathjax.svg?style=flat&label=npm%20total)
 
-As of version 0.5.0, the library is split into the core and optional add-ons which can be loaded after the core has been loaded.
+MathJax is an open-source JavaScript display engine for LaTeX, MathML,
+and AsciiMath notation that works in all modern browsers.  It was
+designed with the goal of consolidating the recent advances in web
+technologies into a single, definitive, math-on-the-web platform
+supporting the major browsers and operating systems.  It requires no
+setup on the part of the user (no plugins to download or software to
+install), so the page author can write web documents that include
+mathematics and be confident that users will be able to view it
+naturally and easily.  Simply include MathJax and some mathematics in
+a web page, and MathJax does the rest.
 
-Getting started with Nerdamer
+Some of the main features of MathJax include:
 
-Load the library in your html page
+- High-quality display of LaTeX, MathML, and AsciiMath notation in HTML pages
 
-```html
-<!-- assuming you've saved the file in the root of course -->
-<!-- This the core and the only file needed if all you'll be doing is evaluating expresssions -->
-<script src="nerdamer.core.js"></script> 
-<!-- LOAD ADD-ONS. These files contain extended functions. See documentation -->
-<!-- again assuming you've saved the files in root -->
-<script src="Algebra.js"></script>
-<script src="Calculus.js"></script>
-<script src="Solve.js"></script>
-<script src="Extra.js"></script>
-```
-Or import everything
-```html
-<script src="all.min.js"></script>  <!-- assuming you've saved the file in the root -->
-```
-If you're using node.js install it using `npm i nerdamer` and then
+- Supported in most browsers with no plug-ins, extra fonts, or special
+  setup for the reader
 
-```javascript
-// const cannot be used since nerdamer gets modified when other modules are loaded  
-var nerdamer = require('nerdamer'); 
-// Load additional modules. These are not required.  
-require('nerdamer/Algebra'); 
-require('nerdamer/Calculus'); 
-require('nerdamer/Solve'); 
-require('nerdamer/Extra');
-```
-Or do a single import to import everything
-```javascript
-const nerdamer = require("nerdamer/all.min")
-```
+- Easy for authors, flexible for publishers, extensible for developers
 
-Some functions have dependencies from other add-ons. 
+- Supports math accessibility, cut-and-paste interoperability, and other
+  advanced functionality
 
-You can see nerdamer in action at http://nerdamer.com/demo
+- Powerful API for integration with other web applications
 
-For full documentation go to http://nerdamer.com/documentation
+See <http://www.mathjax.org/> for additional details about MathJax,
+and <https://docs.mathjax.org> for the MathJax documentation.
 
-All operations are done using the 'nerdamer' object. 
+## MathJax Components
 
-To add an expression just add it to the nerdamer object which will return a `Expression` object.
+MathJax version 3 uses files called *components* that contain the
+various MathJax modules that you can include in your web pages or
+access on a server through NodeJS.  Some components combine all the
+pieces you need to run MathJax with one or more input formats and a
+particular output format, while other components are pieces that can
+be loaded on demand when needed, or by a configuration that specifies
+the pieces you want to combine in a custom way.  For usage
+instructions, see the [MathJax documentation](https://docs.mathjax.org).
 
-```javascript             
-var e = nerdamer('x^2+2*(cos(x)+x*x)');
-console.log(e.text());
+Components provide a convenient packaging of MathJax's modules, but it
+is possible for you to form your own custom components, or to use
+MathJax's modules directly in a node application on a server.  There
+are [web examples](https://github.com/mathjax/MathJax-demos-web)
+showing how to use MathJax in web pages and how to build your own
+components, and [node
+examples](https://github.com/mathjax/MathJax-demos-node) illustrating
+how to use components in node applications or call MathJax modules
+directly.
 
-//result: 
-//2*cos(x)+3*x^2
-```            
-It is also possible to use `nerdamer` functions directly within the need for string manipulation of the input. The input will be parsed and the output will of type `Expression`. For example:
-```javascript
-var ans = nerdamer.expand('(x-1)^5');
-console.log(ans.text());
-// -1-10*x^2-5*x^4+10*x^3+5*x+x^5
+## What's in this Repository
 
-var sol = nerdamer.solve('x^2-4', 'x');
-console.log(sol.text())
-// [2,-2]
-```
+This repository contains only the component files for MathJax, not the
+source code for MathJax (which are available in a separate [MathJax
+source repository](https://github.com/mathjax/MathJax-src/)).  These
+component files are the ones served by the CDNs that offer MathJax to
+the web.  In version 2, the files used on the web were also the source
+files for MathJax, but in version 3, the source files are no longer on
+the CDN, as they are not what are run in the browser.
 
-You can also pass in an object with known values as the second parameter.
+The components are stored in the `es5` directory, and are in ES5 format
+for the widest possible compatibility.  In the future, we may make an
+`es6` directory containing ES6 versions of the components.
 
-```javascript             
-var e = nerdamer('x^2+2*(cos(x)+x*x)',{x:6});
-console.log(e.text());
+## Installation and Use
 
-//result:
-//108+2*cos(6)
-```            
-        
+### Using MathJax components from a CDN on the web
 
-As you can see only the substitution is performed. To evaluate the result just call evaluate. 
-Note that evaluate returns a text string or a number not an object.
+If you are loading MathJax from a CDN into a web page, there is no
+need to install anything.  Simply use a `script` tag that loads
+MathJax from the CDN.  E.g.,
 
-```javascript             
-var e = nerdamer('x^2+2*(cos(x)+x*x)',{x:6}).evaluate();
-console.log(e.text());
-
-//result:
-//109.9203405733006
-```            
-To get back the text as a fraction, call the text method and pass in the string 'fractions'.
-
-```javascript             
-var e = nerdamer('x^2+2*(cos(x)+x*x)',{x:6}).evaluate();
-console.log(e.text('fractions'));
-
-//result:
-//429607273/3908351
-```    
-You can get your expression back as LaTeX by calling the toTeX method
-```javascript             
-var LaTeX = nerdamer('x^2+2*(cos(x)+x*x)',{x:0.25}).toTeX();
-console.log(LaTeX);
-
-//result:
-//2 \cdot \mathrm{cos}\left(\frac{1}{4}\right)+\frac{3}{16}
-```   
-
-To have numbers returned as decimals pass in the string 'decimals' to the toTeX method
-
-```javascript             
-var LaTeX = nerdamer('x^2+2*(cos(x)+x*x)',{x:0.25}).toTeX('decimal');
-console.log(LaTeX);
-
-//result:
-//2 \cdot \mathrm{cos}\left(0.25\right)+0.1875
-```   
-
-Alternatively you can pass an object containing known values into evaluate method instead. The values passed in don't have to be number they can be another expression if needed.
-
-```javascript             
-var e = nerdamer('x^2+2*(cos(x)+x*x)',{x:'x^2+1'});
-console.log(e.text());
-
-//result:
-//2*cos(1+x^2)+3*(1+x^2)^2
-```            
-
-Every time you parse an expression it's stored in nerdamer. To get a list of all the expressions you just call 
-nerdamer.expressions().
-
-```javascript             
-var knownValues = {x:'x^2+1'};
-nerdamer('x^2+2*(cos(x)+x*x)').evaluate(knownValues);
-nerdamer('sin(x)^2+cos(x)^2').evaluate(knownValues);
-
-console.log(nerdamer.expressions());
-
-//result:
-//[ 46.692712758272776, 1 ]
-```            
-
-You can request it as an object as well by passing in true. This can be convenient in some 
-situations as the numbering starts at 1;
-
-```javascript             
-var knownValues = {x:'x^2+1'};
-nerdamer('x^2+2*(cos(x)+x*x)', knownValues );
-nerdamer('sin(x)^2+cos(x)^2', knownValues );
-
-console.log(nerdamer.expressions(true));
-
-//{ '1': '2*cos(1+x^(2))+3*(1+x^(2))^(2)',
-//'2': 'cos(1+x^(2))^(2)+sin(1+x^(2))^(2)' }
-```            
-        
-Functions aren't always immediately parsed to numbers. For example
-
-```javascript
-var result = nerdamer('cos(x)',{x:6});
-console.log(result.text());
-//cos(6)
-```
-will only subsitute out the variable name. To change this behaviour numer should be passed in as the 3rd argument.
-
-```javascript
-var result = nerdamer('cos(x)',{x:6}, 'numer');
-console.log(result.text());
-//0.960170286650366
-```
-or alternatively
-
-```javascript
-var result = nerdamer('cos(x)').evaluate({x:6});
-console.log(result.text());
-//0.960170286650366
-```
-The difference however is that the first option directly substitutes the variables while the second first evaluates
-the expression and then makes the substitutions. This library utilizes native javascript functions as much as possible. As a result it inherits whatever rounding errors they possess. One major change with version 0.6.0 however, is dealing with floating point issues.
-
-```javascript
-var result = nerdamer('sqrt(x)*sqrt(x)-2', {x: 2});
-console.log(result.text());
-//0
-```
-The above expample now returns zero whereas in previous version the result would be 4.440892098500626e-16. Same goes for 0.1+0.2.
-
-An expression can be replaced directly by passing in the index of which expression to override. For example
-
-```javascript
-nerdamer('cos(x)',{x:6}, 'numer');
-nerdamer('sin(x)+y',{x:6}, null, 1);
-console.log(nerdamer.expressions());
-//[ 'sin(6)+y' ]
+``` html
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 ```
 
-If multiple modifier options need to be passed into nerdamer you can do so using an array. For example ...
+See the [MathJax
+documentation](https://docs.mathjax.org/en/latest/index.html#browser-components),
+the [MathJax Web Demos](https://github.com/mathjax/MathJax-demos-web),
+and the [MathJax Component
+Repository](https://github.com/mathjax/MathJax-demos-web) for more information.
 
-```javascript
-var e = nerdamer('cos(x)+(y-x)^2', {x:7}, ['expand', 'numer']);
-console.log(e.text());
-//-14*y+y^2+49.7539022543433
+### Hosting your own copy of the MathJax Components
+
+If you want to host MathJax from your own server, you can do so by
+installing the `mathjax` package using `npm` and moving the `es5`
+directory to an appropriate location on your server:
+
+``` bash
+npm install mathjax@3
+mv node_modules/mathjax/es5 <path-to-server-location>/mathjax
 ```
 
-If you need the code as LaTeX you can pass in true as the second parameter when requesting the expressions.
+Note that we are still making updates to version 2, so include `@3`
+when you install, since the latest chronological version may not be
+version 3.
 
-```javascript             
-nerdamer('x^2+2*(cos(x)+x*x)');
-nerdamer('sin(x)^0.25+cos(x)^0.5' );
-var asObject = true;
-var asLaTeX = true;
-console.log(nerdamer.expressions(asObject, asLaTeX));
+Alternatively, you can get the files via GitHub:
 
-/*{ '1': '2 \\cdot \\mathrm{cos}\\left(x\\right)+3 \\cdot x^{2}',
-  '2': '\\sqrt{\\mathrm{cos}\\left(x\\right)}+\\mathrm{sin}\\left(x\\right)^{\\frac{1}{4}}' }*/
-```            
-        
-
-You can specify a particular location when adding an expression, which is specified with the third parameter.
-
-```javascript 
-nerdamer('x^2+2*(cos(x)+x*x)');
-nerdamer('sin(x)^0.25+cos(x)^0.5' );
-nerdamer('expr-override', undefined, 2 );
-var asObject = false;
-var asLaTeX = true;
-console.log(nerdamer.expressions(asObject, asLaTeX));
-
-/* [ '2 \\cdot \\mathrm{cos}\\left(x\\right)+3 \\cdot x^{2}',
-  '\\sqrt{\\mathrm{cos}\\left(x\\right)}+\\mathrm{sin}\\left(x\\right)^{\\frac{1}{4}}',
-  'expr-override' ]
- */
+``` bash
+git clone https://github.com/mathjax/MathJax.git mj-tmp
+mv mj-tmp/es5 <path-to-server-location>/mathjax
+rm -rf mj-tmp
 ```
 
-Here's an example of reserved variable and function names.
+Then (in either case) you can use a script tag like the following:
 
-```javascript 
-var reserved = nerdamer.reserved();
-console.log(reserved);
-//result:
-/* csc, sec, cot, erf, fact, mod, GCD, QGCD, LCM, pow, PI, E, cos, sin, tan, acos, asin, atan, sinh, cosh, tanh, asinh, acosh, atanh, exp, min, max, floor, ceil, round, vector, matrix, parens, sqrt, log, expand, abs, invert, transpose, dot */
-
-//or as an array
-
-var reserved = nerdamer.reserved(true);
-console.log(reserved);
-//result:
-/* [ 'csc', 'sec', 'cot', 'erf', 'fact', 'mod', 'GCD', 'QGCD', 'LCM', 'pow', 'PI', 'E', 'cos', 'sin', 'tan', 'acos', 'asin', 'atan', 'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh', 'exp', 'min', 'max', 'floor', 'ceil', 'round', 'vector', 'matrix',
-  'parens', 'sqrt', 'log', 'expand', 'abs', 'invert', 'transpose', 'dot' ]  */
-```            
-
-Most math functions are passed in as part of the expression. If you want to differentiate for instance you just use the function diff which is located in the Calculus add-on as of version 0.5.0
-
-```javascript             
-var e = nerdamer('diff(x^2+2*(cos(x)+x*x),x)');
-
-console.log(e.text());
-
-//result: 
-//-2*sin(x)+6*x
-```
-        
-
-Nerdamer can also handle runtime functions. To do this use the method setFunction. 
-The runtime functions do have symbolic capabilities and support for imaginary numbers. 
-The setfunction method is used as follows:
-
-nerdamer.setFunction( function_name, parameter_array, function_body ) 
-
-For Example:
-
-```javascript             
-//generate some points
-var f = function(x) { return 5*x-1; }
-console.log(f(1)); //4
-console.log(f(2)); //9 - value to be found
-console.log(f(7)); //34
-
-nerdamer.setFunction('interpolate',['y0','x0','y1','x1','x'],'y0+(y1-y0)*((x-x0)/(x1-x0))')
-var answer = nerdamer('interpolate(4,1,34,7,2)').evaluate();
-
-console.log(answer);
-
-//result: 9
+``` html
+<script id="MathJax-script" async src="<url-to-your-site>/mathjax/tex-chtml.js"></script>
 ```
 
-Custom functions alternatively be set in following manner.
+where `<url-to-your-site>` is replaced by the URL to the location
+where you moved the MathJax files above.
 
-```javascript
-nerdamer('hyp(a, b) := sqrt(a^2 + b^2) ');
-var result = nerdamer('hyp(3, 4)').evaluate().text();
-console.log(result);
-//result: 5
+See the
+[documentation](https://docs.mathjax.org/en/latest/web/hosting.html)
+for details.
+
+### Using MathJax components in a node application
+
+To use MathJax components in a node application, install the `mathjax` package:
+
+``` bash
+npm install mathjax@3
 ```
 
+(we are still making updates to version 2, so you should include `@3`
+since the latest chronological version may not be version 3).
 
-If you need to add a constant use the setConstant method
+Then require `mathjax` within your application:
 
-```javascript             
-nerdamer.setConstant( 'g', 9.81);
-var weight = nerdamer('100*g').text();
-console.log(weight);
-//result:
-//981
-```            
-        
-To delete just set it to delete
+```js
+require('mathjax').init({ ... }).then((MathJax) => { ... });
+```
+    
+where the first `{ ... }` is a MathJax configuration, and the second
+`{ ... }` is the code to run after MathJax has been loaded.  E.g.
 
-```javascript             
-nerdamer.setConstant( 'g', 9.81);
-var weight = nerdamer('100*g').text();
-console.log(weight);
-//981
-nerdamer.setConstant( 'g', 'delete');
-var weight = nerdamer('100*g').text();
-console.log(weight);
-//100*g
-```        
-
-You also have the option of exporting your function to a javascript function which can be useful if you need some 
-filtering from user input. Do keep in mind that the parameters are sorted alphabetically for more than one 
-parameter. To use it add the expression to nerdamer and use the buildFunction method.
-
-```javascript             
-var f = nerdamer('x^2+5').buildFunction();
-console.log(f(9));
-
-//result:
-//86
-```            
-If you have a particular order in which you need the parameters to be set, then you pass in an array with the variables in the order in which you want them for instance:
-
- ```javascript
-var f = nerdamer('z+x^2+y').buildFunction(['y', 'x', 'z']);
- console.log(f(9,2,1));
- //result
- //14
- ```
-
-Every time you add an expression to nerdamer it's stored. To list the expressions currently in nerdamer call 
-the 'expressions' method. To delete an expression use the 'clear' method and pass in the expression you want to delete. 
-To clear everything pass in the string 'all'.
-
-```javascript            
-nerdamer('n*R*T/v');
-nerdamer('mc^2');
-nerdamer('G*m1*m2/d^2');
-
-nerdamer.clear(2);
-
-console.log(nerdamer.expressions(true));
-
-//result:
-//{ '1': 'R*T*n*v^(-1)', '2': 'G*d^(-2)*m1*m2' }
-
-nerdamer.clear('all');
-console.log(nerdamer.expressions(true));
-//result:
-//{}
-```            
-     
-If you need go get the variables of an expression use the variables method. This method can be called after
-nerdamer was provided an expression. For example
-
-```javascript
-var variables = nerdamer('csc(x*cos(y))-no_boring_x').variables();
-console.log(variables);
-//result:
-//[ 'no_boring_x', 'x', 'y' ]
+```js
+require('mathjax').init({
+  loader: {load: ['input/tex', 'output/svg']}
+}).then((MathJax) => {
+  const svg = MathJax.tex2svg('\\frac{1}{x^2-1}', {display: true});
+  console.log(MathJax.startup.adaptor.outerHTML(svg));
+}).catch((err) => console.log(err.message));
 ```
 
-The order in which the variables appear require a little bit of knowledge of how nerdamer organizes symbols. For the
-sake of simplicity we'll just assume that there is no particular order   
+**Note:** this technique is for node-based application only, not for
+browser applications.  This method sets up an alternative DOM
+implementation, which you don't need in the browser, and tells MathJax
+to use node's `require()` command to load external modules.  This
+setup will not work properly in the browser, even if you webpack it or
+bundle it in other ways.
 
-----------------------------------------------------------------------------------------------------------------------
+See the
+[documentation](https://docs.mathjax.org/en/latest/index.html#server-nodejs)
+and the [MathJax Node
+Repository](https://github.com/mathjax/MathJax-demos-node) for more details.
 
-Using the solver
-===============
-To solve equations first load Solve.js. Just remember that Solve also required Algebra.js and Calculus.js to be loaded. You can then solve equations using nerdamer. Important: State the variable for which you are trying to solve.
-```javascript
-var sol = nerdamer.solveEquations('x^3+8=x^2+6','x');
-console.log(sol.toString());
-//1+i,-i+1,-1
+## Reducing the Size of the Components Directory
+
+Since the `es5` directory contains *all* the component files, so if
+you are only planning one use one configuration, you can reduce the
+size of the MathJax directory by removing unused components. For
+example, if you are using the `tex-chtml.js` component, then you can
+remove the `tex-mml-chtml.js`, `tex-svg.js`, `tex-mml-svg.js`,
+`tex-chtml-full.js`, and `tex-svg-full.js` configurations, which will
+save considerable space.  Indeed, you should be able to remove
+everything other than `tex-chtml.js`, and the `input/tex/extensions`,
+`output/chtml/fonts/woff-v2`, `adaptors`, `a11y`, and `sre`
+directories.  If you are using the results only on the web, you can
+remove `adaptors` as well.
+
+If you are not using A11Y support (e.g., speech generation, or
+semantic enrichment), then you can remove `a11y` and `sre` as well
+(though in this case you may need to disable the assistive tools in
+the MathJax contextual menu in order to avoid MathJax trying to load
+them when they aren't there).
+
+If you are using SVG rather than CommonHTML output (e.g., `tex-svg.js`
+rather than `tex-chtml.js`), you can remove the
+`output/chtml/fonts/woff-v2` directory.  If you are using MathML input
+rather than TeX (e.g., `mml-chtml.js` rather than `tex-chtml.js`),
+then you can remove `input/tex/extensions` as well.
+
+
+## The Component Files and Pull Requests
+
+The `es5` directory is generated automatically from the contents of the
+MathJax source repository.  You can rebuild the components using the
+command
+
+``` bash
+npm run make-es5 --silent
 ```
 
-Notice that we use toString rather than text as this returns a javascript array.
+Note that since the contents of this repository are generated
+automatically, you should not submit pull requests that modify the
+contents of the `es5` directory.  If you wish to submit a modification
+to MathJax, you should make a pull request in the [MathJax source
+repository](https://github.com/mathjax/MathJax-src).
 
-You can also solve an expression
-```javascript
-var e = nerdamer.solveEquations('x^2+4-y', 'y');
-console.log(e[0].text());
-//4+x^2
-```
+## MathJax Community
 
-You can also solve multivariate equations
-```javascript
-var sol = nerdamer.solveEquations('x^2+8+y=x+6','x');
-console.log(sol.toString());
-//0.5*((-4*y-7)^0.5+1),0.5*(-(-4*y-7)^0.5+1)
-```
-You can do up to 3rd order polynomials for multivariate polynomials
+The main MathJax website is <http://www.mathjax.org>, and it includes
+announcements and other important information.  A [MathJax user
+forum](http://groups.google.com/group/mathjax-users) for asking
+questions and getting assistance is hosted at Google, and the [MathJax
+bug tracker](https://github.com/mathjax/MathJax/issues) is hosted
+at GitHub.
 
-Additionally you can try for equations containing functions. This is more of a hit or miss approach unlike single variable polynomials (which uses Mr. David Binner's Jenkins-Traub port - http://www.akiti.ca/PolyRootRe.html) but it's there if you want to give it a try.
+Before reporting a bug, please check that it has not already been
+reported.  Also, please use the bug tracker (rather than the help
+forum) for reporting bugs, and use the user's forum (rather than the
+bug tracker) for questions about how to use MathJax.
 
-```javascript
-var sol = nerdamer.solveEquations('cos(x)+cos(3*x)=1','x');
-console.log(sol.toString());
-//5.7981235959208695,0.4850617112587174
-```
-To solve a system of linear equations pass them in as an array. For example
+## MathJax Resources
 
-```javascript
-var sol = nerdamer.solveEquations(['x+y=1', '2*x=6', '4*z+y=6']);
-console.log(sol);
-//[ [ 'x', 3 ], [ 'y', -2 ], [ 'z', 2 ] ]
-```
-In version 0.7.2 and up the solver can additionally be used in the following way
-```javascript
-//first parse the equation
-var x = nerdamer('x^2+2=y-7*a');
-//You can make substitutions to the equation
-x = x.evaluate({a: 'x^2-3'});
-console.log(x.toString()); //2+x^2=-7*x^2+21+y
-var solutions = x.solveFor('x');
-console.log(solutions.toString()); //(1/16)*sqrt(32*y+608),(-1/16)*sqrt(32*y+608)
-```
+* [MathJax Documentation](https://docs.mathjax.org)
+* [MathJax Components](https://github.com/mathjax/MathJax)
+* [MathJax Source Code](https://github.com/mathjax/MathJax-src)
+* [MathJax Web Examples](https://github.com/mathjax/MathJax-demos-web)
+* [MathJax Node Examples](https://github.com/mathjax/MathJax-demos-node)
+* [MathJax Bug Tracker](https://github.com/mathjax/MathJax/issues)
+* [MathJax Users' Group](http://groups.google.com/group/mathjax-users)
+
