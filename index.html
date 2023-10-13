@@ -9,13 +9,35 @@
 <!-- Testando diretamento no meu diretório raiz
 <script src="./MathJax/es5/tex-mml-chtml.js"></script> -->
 
-<!-- Scrpt mathjax normal
+<!-- 2º tentativa: Não funciona bem no google crome e edge, só no brave
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>  -->
 
-<!-- Nova tentativa -->
-<script type="text/javascript" async
+<!-- 3º tentativa: Renderiza a 1º equação, porém não renderiza as equações do inputm-->
+<!-- <script type="text/javascript" async 
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script> -->
+
+<!-- 4º tentativa: Pega a primeira, mas não a 2º
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+
+<!-- 5º tentativa: Pegou no brave, porém não nos outros -->
+<script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>
+
+
+<!-- <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    extensions: ["tex2jax.js"],
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] },
+    tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno" },
+    TeX: { noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } } },
+    messageStyle: "none"
+  });
+  </script>    
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script> -->
+
 
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'>
 <link rel="stylesheet" href="./style.css">
