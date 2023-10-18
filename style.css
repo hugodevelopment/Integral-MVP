@@ -203,6 +203,8 @@ button:hover {
  } 
  
 /* ------------------------------ Reponsividade para a tela em celulares --------------------------------------*/
+
+/*Tenho que adicionar o media screen  */
 @media (max-width: 450px) {
   main{
     height: 100%;
