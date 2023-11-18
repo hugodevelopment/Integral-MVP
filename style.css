@@ -55,7 +55,7 @@ li{
 
 /* ------------------------------------------------- classe Principal do site e das divs --------------------------------------- */
 main{
-  height: 170vh;
+  height: 150vh;
   padding:0% 0.1%;
   background-image: url(fundo-integral.jpg);
 }
