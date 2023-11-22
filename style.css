@@ -55,7 +55,7 @@ li{
 
 /* ------------------------------------------------- classe Principal do site e das divs --------------------------------------- */
 main{
-  height: 150vh;
+  height: 170vh;
   padding:0% 0.1%;
   background-image: url(fundo-integral.jpg);
 }
@@ -123,7 +123,6 @@ nav{
 .integral {
     text-align: center;
     background-color: rgb(224, 172, 179);
-/*     background-color: rgb(40, 72, 119); */
     border-radius: 12px;
     display: flex;
     margin-left: 32%;
